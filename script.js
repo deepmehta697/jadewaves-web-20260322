@@ -521,6 +521,8 @@ if (reveals.length) {
 }
 
 if (menuToggle && mobileMenu) {
+  mobileMenu.setAttribute("hidden", "");
+
   menuToggle.addEventListener("click", () => {
     const open = mobileMenu.hasAttribute("hidden");
     if (open) {
