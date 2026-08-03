@@ -1,576 +1,477 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jade Waves Enterprise</title>
-    <meta
-      name="description"
-      content="Global industrial minerals and export-ready material supply by Jade Waves Enterprise."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              ink: "#111111",
-              mist: "#f5f5f7",
-              stone: "#e8e8ed",
-              jade: "#1f7067",
-              sand: "#d8c6a5",
-              night: "#050505",
-            },
-            fontFamily: {
-              sans: ["Manrope", "sans-serif"],
-            },
-            letterSpacing: {
-              micro: "0.18em",
-              wideish: "0.28em",
-            },
-          },
-        },
-      };
-    </script>
-    <style type="text/tailwindcss">
-      @layer base {
-        html {
-          scroll-behavior: smooth;
-        }
-
-        body {
-          @apply bg-mist font-sans text-ink antialiased;
-        }
-
-        ::selection {
-          background: rgba(31, 112, 103, 0.2);
-        }
-      }
-
-      @layer components {
-        .site-header.is-scrolled {
-          @apply mt-3 rounded-full border border-black/5 bg-white/75 px-5 py-3 shadow-[0_18px_60px_rgba(0,0,0,0.08)] backdrop-blur-xl;
-        }
-
-        .reveal {
-          opacity: 0;
-          transform: translateY(28px);
-          transition:
-            opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-            transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .reveal.is-visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .section-shell {
-          @apply mx-auto w-[min(1200px,calc(100vw-2rem))] md:w-[min(1200px,calc(100vw-4rem))];
-        }
-
-        .section-kicker {
-          @apply text-[0.72rem] font-semibold uppercase tracking-wideish text-black/45;
-        }
-
-        .selector-button {
-          @apply rounded-full px-4 py-2.5 text-sm font-medium text-black/60 transition hover:text-black;
-        }
-
-        .selector-button.is-active {
-          @apply bg-black text-white shadow-[0_12px_30px_rgba(0,0,0,0.15)];
-        }
-
-        .display-panel {
-          @apply relative overflow-hidden rounded-[2.75rem] border border-black/5 shadow-[0_40px_120px_rgba(0,0,0,0.14)];
-        }
-
-        .hero-stage {
-          background:
-            radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8), transparent 28%),
-            radial-gradient(circle at 80% 22%, rgba(31, 112, 103, 0.18), transparent 20%),
-            linear-gradient(180deg, #f8f8fa 0%, #eaedf1 100%);
-        }
-
-        .stage-panel {
-          @apply relative overflow-hidden rounded-[2.75rem] border border-black/5 bg-white shadow-[0_40px_120px_rgba(0,0,0,0.14)];
-        }
-
-        .stage-silica {
-          background:
-            radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.95), transparent 24%),
-            radial-gradient(circle at 76% 24%, rgba(216, 198, 165, 0.35), transparent 18%),
-            linear-gradient(180deg, #fafbfd 0%, #e4ecf3 46%, #d8c7a7 100%);
-        }
-
-        .stage-bentonite {
-          background:
-            radial-gradient(circle at 22% 20%, rgba(255, 255, 255, 0.9), transparent 22%),
-            radial-gradient(circle at 80% 20%, rgba(31, 112, 103, 0.28), transparent 18%),
-            linear-gradient(180deg, #eff4f1 0%, #dce8e1 52%, #a9b9b1 100%);
-        }
-
-        .stage-cementitious {
-          background:
-            radial-gradient(circle at 24% 14%, rgba(255, 255, 255, 0.8), transparent 18%),
-            radial-gradient(circle at 72% 22%, rgba(17, 17, 17, 0.12), transparent 18%),
-            linear-gradient(180deg, #edeef2 0%, #d2d7de 44%, #8e9297 100%);
-        }
-
-        .stage-process {
-          background:
-            radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.9), transparent 22%),
-            radial-gradient(circle at 78% 18%, rgba(31, 112, 103, 0.18), transparent 18%),
-            linear-gradient(180deg, #fbfbf8 0%, #ede7da 50%, #d8cbb3 100%);
-        }
-
-        .ops-row {
-          @apply grid gap-6 border-b border-white/10 py-10 md:py-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14;
-        }
-
-        .metric-block {
-          @apply rounded-[2rem] bg-white px-7 py-8 shadow-[0_18px_60px_rgba(0,0,0,0.08)] ring-1 ring-black/5;
-        }
-
-        .input-line {
-          @apply w-full border-0 border-b border-white/20 bg-transparent pb-3 text-white outline-none transition focus:border-white;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-    </style>
-    <script defer src="script.js"></script>
-  </head>
-  <body>
-    <div aria-hidden="true" class="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-      <div class="absolute left-[-12rem] top-[-10rem] h-[28rem] w-[28rem] rounded-full bg-jade/8 blur-3xl"></div>
-      <div class="absolute right-[-10rem] top-[8rem] h-[24rem] w-[24rem] rounded-full bg-sand/25 blur-3xl"></div>
-      <div class="absolute bottom-[-10rem] left-1/2 h-[24rem] w-[24rem] -translate-x-1/2 rounded-full bg-white blur-3xl"></div>
+            <html lang="en">
+              <head>
+                <script>
+  window.__JWE_SITE_BASE_PATH__ = (function() {
+    var repoPath = "/jadewaves";
+    var pathname = window.location.pathname;
+    if (pathname === repoPath || pathname.indexOf(repoPath + "/") === 0) {
+      return repoPath;
+    }
+    return "";
+  })();
+  var baseHref = window.__JWE_SITE_BASE_PATH__ ? window.__JWE_SITE_BASE_PATH__ + "/" : "/";
+  document.write('<base href="' + baseHref + '">');
+</script>
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <title>Industrial Mineral Exporter from India | Supplier for Global Buyers | Jade Waves Enterprise</title>
+                <meta name="description" content="Industrial mineral exporter from India supplying global buyers across Vietnam, Thailand, the Philippines, UAE, Oman, Qatar, Bahrain, Mauritius, Maldives, Malaysia, Singapore, and Saudi Arabia." />
+                <meta name="robots" content="index,follow" />
+                <link rel="canonical" href="https://jadewavesenterprise.com/" />
+                <meta property="og:title" content="Industrial Mineral Exporter from India | Supplier for Global Buyers | Jade Waves Enterprise" />
+                <meta property="og:description" content="Industrial mineral exporter from India supplying global buyers across Vietnam, Thailand, the Philippines, UAE, Oman, Qatar, Bahrain, Mauritius, Maldives, Malaysia, Singapore, and Saudi Arabia." />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://jadewavesenterprise.com/" />
+                <meta property="og:site_name" content="Jade Waves Enterprise" />
+                <meta property="og:image" content="https://jadewavesenterprise.com/assets/jade-waves-logo-transparent.png" />
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+                <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+                <link rel="stylesheet" href="styles.css?v=20260801094354" />
+                <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BRL4JKNN6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9BRL4JKNN6');
+</script>
+                <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Organization", "name": "Jade Waves Enterprise", "url": "https://jadewavesenterprise.com", "email": "deep@jadewavesenterprise.com", "telephone": "+91-999-883-5503", "addressCountry": "IN"}, {"@context": "https://schema.org", "@type": "ItemList", "name": "Jade Waves Enterprise Product Portfolio", "itemListElement": [{"@type": "ListItem", "position": 1, "url": "https://jadewavesenterprise.com/products/silica-sand/", "name": "Silica Sand"}, {"@type": "ListItem", "position": 2, "url": "https://jadewavesenterprise.com/products/quartz-sand-for-ceramics/", "name": "Quartz Sand"}, {"@type": "ListItem", "position": 3, "url": "https://jadewavesenterprise.com/products/feldspar/", "name": "Feldspar"}]}]</script>
+                <script defer src="script.js?v=20260801094354"></script>
+              </head>
+              <body class="antialiased page-home">
+                <header class="site-header" data-header>
+  <div class="site-header__inner">
+    <a class="brand-mark" href="./" aria-label="Jade Waves Enterprise home">
+      <img src="assets/jade-waves-logo-transparent.png" alt="Jade Waves Enterprise logo" />
+    </a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <a href="./#about">About</a>
+      <a href="products/">Products</a>
+      <a href="operations/">Operations</a>
+      <a href="blog/">Blog</a>
+      <a href="export-markets/">Markets</a>
+      <a href="./#contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a class="button button--dark button--compact" href="./#contact" data-set-request="Quote">Request Quote</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+        Menu
+      </button>
     </div>
-
-    <header
-      class="site-header fixed inset-x-0 top-0 z-30 mx-auto flex w-[min(1200px,calc(100vw-2rem))] items-center justify-between gap-4 py-5 transition-all duration-300 md:w-[min(1200px,calc(100vw-4rem))]"
-    >
-      <a href="#top" aria-label="Jade Waves Enterprise home" class="inline-flex items-center gap-3">
-        <img
-          src="assets/jade-waves-logo-transparent.png"
-          alt="Jade Waves Enterprise logo"
-          class="h-11 w-auto sm:h-12"
-        />
-      </a>
-
-      <nav class="hidden items-center gap-7 text-sm text-black/55 lg:flex" aria-label="Primary">
-        <a class="transition hover:text-black" href="#story">Story</a>
-        <a class="transition hover:text-black" href="#systems">Systems</a>
-        <a class="transition hover:text-black" href="#execution">Execution</a>
-        <a class="transition hover:text-black" href="#contact">Contact</a>
-      </nav>
-
-      <a
-        href="#contact"
-        class="inline-flex min-h-11 items-center justify-center rounded-full bg-black px-5 text-sm font-semibold text-white shadow-[0_14px_32px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
-        >Request A Quote</a
-      >
-    </header>
-
-    <main id="top" class="relative z-10">
-      <section class="px-0 pt-28">
-        <div class="section-shell">
-          <div class="reveal flex flex-col items-center text-center">
-            <p class="section-kicker">Jade Waves Enterprise</p>
-            <h1 class="mt-4 max-w-[12ch] text-[clamp(3.25rem,8vw,7rem)] font-extrabold leading-[0.92] tracking-[-0.06em] text-black">
-              Global materials, handled like a finished product.
-            </h1>
-            <p class="mt-6 max-w-[44rem] text-[1.04rem] leading-7 text-black/62 md:text-[1.12rem]">
-              Quartz, silica sand, bentonite, fly ash, copper slag, kaolin,
-              activated bleaching earth, and salt supplied with cleaner
-              communication, tighter export execution, and less friction for the buyer.
-            </p>
-            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="#systems"
-                class="inline-flex min-h-12 items-center justify-center rounded-full bg-black px-6 text-sm font-semibold text-white transition hover:-translate-y-0.5"
-                >Explore Material Systems</a
-              >
-              <a
-                href="#execution"
-                class="inline-flex min-h-12 items-center justify-center rounded-full border border-black/10 bg-white/80 px-6 text-sm font-semibold text-black transition hover:-translate-y-0.5"
-                >See How It Works</a
-              >
+  </div>
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
+    <a href="./#about">About</a>
+    <a href="products/">Products</a>
+    <a href="operations/">Operations</a>
+    <a href="blog/">Blog</a>
+    <a href="export-markets/">Markets</a>
+    <a href="./#contact">Contact</a>
+  </div>
+</header>
+        <main>
+          <section class="hero hero--home">
+            <div class="hero__strata" aria-hidden="true">
+              <span class="strata strata--a"></span>
+              <span class="strata strata--b"></span>
+              <span class="strata strata--c"></span>
+              <span class="route-line route-line--hero"></span>
             </div>
-          </div>
-
-          <div
-            class="hero-stage display-panel reveal mt-12 min-h-[540px] p-5 sm:p-7 lg:min-h-[720px] lg:p-9"
-            data-hero-stage
-          >
-            <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.5),transparent_45%,rgba(17,17,17,0.03)_100%)]"></div>
-            <img
-              src="assets/jade-waves-logo-transparent.png"
-              alt=""
-              aria-hidden="true"
-              class="absolute right-6 top-6 h-16 w-auto opacity-15 sm:h-20"
-            />
-
-            <div
-              class="absolute inset-x-[6%] top-[18%] h-[32%] rounded-[2rem] bg-white/35 blur-3xl"
-              data-hero-float
-            ></div>
-            <div
-              class="absolute left-[9%] top-[20%] h-28 w-28 rounded-full bg-white/70 blur-xl sm:h-36 sm:w-36"
-              data-hero-float
-            ></div>
-            <div
-              class="absolute right-[12%] top-[24%] h-24 w-24 rounded-full bg-jade/20 blur-xl sm:h-32 sm:w-32"
-              data-hero-float
-            ></div>
-            <div
-              class="absolute bottom-0 left-0 right-0 h-[44%] bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(227,233,239,0.85)_30%,rgba(212,200,174,0.95)_100%)]"
-            ></div>
-            <div
-              class="absolute bottom-[8%] left-[6%] right-[6%] h-[22%] rounded-[2.5rem] bg-[linear-gradient(180deg,rgba(255,255,255,0.32),rgba(31,112,103,0.08)_45%,rgba(17,17,17,0.04)_100%)] blur-[2px]"
-            ></div>
-
-            <div class="relative z-10 flex h-full flex-col justify-between">
-              <div class="max-w-[28rem]">
-                <p class="section-kicker text-black/40">Near Mundra Port / Worldwide Delivery</p>
-                <h2 class="mt-3 text-[clamp(2rem,4vw,4rem)] font-extrabold leading-[0.95] tracking-[-0.05em] text-black">
-                  From source to vessel, built for industrial buyers who notice the difference.
-                </h2>
-              </div>
-
-              <div class="grid gap-3 text-left sm:grid-cols-2 lg:grid-cols-4">
-                <div class="rounded-[1.4rem] bg-white/60 px-4 py-4 backdrop-blur-md ring-1 ring-black/5">
-                  <p class="section-kicker text-black/35">Terms</p>
-                  <p class="mt-2 text-lg font-semibold text-black">FOB / CIF / CNF</p>
-                </div>
-                <div class="rounded-[1.4rem] bg-white/60 px-4 py-4 backdrop-blur-md ring-1 ring-black/5">
-                  <p class="section-kicker text-black/35">Container Type</p>
-                  <p class="mt-2 text-lg font-semibold text-black">LCL / FCL</p>
-                </div>
-                <div class="rounded-[1.4rem] bg-white/60 px-4 py-4 backdrop-blur-md ring-1 ring-black/5">
-                  <p class="section-kicker text-black/35">Lead Window</p>
-                  <p class="mt-2 text-lg font-semibold text-black">7-10 Days</p>
-                </div>
-                <div class="rounded-[1.4rem] bg-white/60 px-4 py-4 backdrop-blur-md ring-1 ring-black/5">
-                  <p class="section-kicker text-black/35">Commercial Flow</p>
-                  <p class="mt-2 text-lg font-semibold text-black">Sample First</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="story" class="mt-6 bg-black px-0 py-24 text-white md:py-32">
-        <div class="section-shell">
-          <div class="reveal flex flex-col items-center text-center">
-            <p class="section-kicker text-white/40">A Different Kind Of Export Partner</p>
-            <h2 class="mt-4 max-w-[11ch] text-[clamp(3rem,7vw,6.5rem)] font-extrabold leading-[0.9] tracking-[-0.06em]">
-              Industrial materials, with consumer-grade clarity.
-            </h2>
-            <p class="mt-6 max-w-[42rem] text-[1.05rem] leading-7 text-white/62">
-              Jade Waves is not presented as a commodity list. It is positioned
-              as a disciplined supply partner that studies the requirement,
-              prepares the right grade, documents the shipment properly, and
-              stays responsive when export reality gets messy.
-            </p>
-          </div>
-
-          <div class="reveal mt-16 grid gap-4 md:grid-cols-3">
-            <div class="rounded-[2rem] border border-white/10 bg-white/[0.04] px-6 py-8 backdrop-blur-md">
-              <p class="section-kicker text-white/35">Supply</p>
-              <p class="mt-3 text-2xl font-semibold tracking-[-0.04em]">Source at origin</p>
-              <p class="mt-3 leading-7 text-white/62">
-                Mining, processing, warehousing, and dispatch are framed as one continuous system.
-              </p>
-            </div>
-            <div class="rounded-[2rem] border border-white/10 bg-white/[0.04] px-6 py-8 backdrop-blur-md">
-              <p class="section-kicker text-white/35">Quality</p>
-              <p class="mt-3 text-2xl font-semibold tracking-[-0.04em]">Prepared for the end use</p>
-              <p class="mt-3 leading-7 text-white/62">
-                The pitch centers on usable grades, application fit, and cleaner material handling.
-              </p>
-            </div>
-            <div class="rounded-[2rem] border border-white/10 bg-white/[0.04] px-6 py-8 backdrop-blur-md">
-              <p class="section-kicker text-white/35">Execution</p>
-              <p class="mt-3 text-2xl font-semibold tracking-[-0.04em]">Export without guesswork</p>
-              <p class="mt-3 leading-7 text-white/62">
-                The founder voice emphasizes vessel changes, documents, urgency, and staying clear under pressure.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="systems" class="px-0 py-24 md:py-32">
-        <div class="section-shell">
-          <div class="reveal flex flex-col items-center text-center">
-            <p class="section-kicker">Material Systems</p>
-            <h2 class="mt-4 max-w-[10ch] text-[clamp(3rem,7vw,6rem)] font-extrabold leading-[0.92] tracking-[-0.06em]">
-              One supply partner, multiple industrial tracks.
-            </h2>
-            <p class="mt-5 max-w-[42rem] text-[1.04rem] leading-7 text-black/62">
-              Instead of showing a crowded catalog, the page groups the business
-              into a few clearer systems buyers can scan in seconds.
-            </p>
-          </div>
-
-          <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-2.5" role="tablist" aria-label="Material systems">
-            <button class="selector-button is-active" type="button" role="tab" aria-selected="true" data-product="silica">
-              Quartz / Silica
-            </button>
-            <button class="selector-button" type="button" role="tab" aria-selected="false" data-product="bentonite">
-              Bentonite / Activated Clay
-            </button>
-            <button class="selector-button" type="button" role="tab" aria-selected="false" data-product="cementitious">
-              Fly Ash / Copper Slag
-            </button>
-            <button class="selector-button" type="button" role="tab" aria-selected="false" data-product="process">
-              Kaolin / Salt
-            </button>
-          </div>
-
-          <div
-            id="product-stage"
-            class="stage-panel stage-silica reveal mt-10 min-h-[560px] p-6 sm:p-8 lg:min-h-[680px] lg:p-10"
-            role="tabpanel"
-          >
-            <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.45),transparent_40%,rgba(17,17,17,0.04)_100%)]"></div>
-            <div class="absolute left-[8%] top-[16%] h-24 w-24 rounded-full bg-white/70 blur-xl sm:h-36 sm:w-36"></div>
-            <div class="absolute right-[8%] top-[18%] h-20 w-20 rounded-full bg-black/5 blur-xl sm:h-32 sm:w-32"></div>
-            <div class="absolute bottom-0 left-0 right-0 h-[42%] bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.22)_20%,rgba(0,0,0,0.12)_100%)]"></div>
-            <div class="absolute bottom-[14%] left-[8%] right-[8%] h-[16%] rounded-[999px] bg-white/25 blur-[4px]"></div>
-            <div class="absolute bottom-[10%] left-[14%] h-[20%] w-[34%] rounded-[999px] bg-white/25 blur-xl"></div>
-            <div class="absolute bottom-[8%] right-[10%] h-[24%] w-[28%] rounded-[999px] bg-black/8 blur-xl"></div>
-
-            <div class="relative z-10 flex h-full flex-col justify-between">
-              <div class="max-w-[30rem]">
-                <p id="stage-eyebrow" class="section-kicker text-black/38">Glass / Ceramics / Foundry</p>
-                <h3 id="stage-title" class="mt-3 text-[clamp(2.5rem,5vw,5rem)] font-extrabold leading-[0.92] tracking-[-0.06em] text-black">
-                  Quartz / Silica Series
-                </h3>
-                <p id="stage-copy" class="mt-5 max-w-[34rem] text-[1.02rem] leading-7 text-black/60">
-                  High-purity quartz, silica sand, and silica flour positioned
-                  for glass, ceramics, foundry, engineered surfaces, and
-                  industrial manufacturing where grain control and consistency
-                  matter.
+            <div class="shell home-hero">
+              <div class="hero-copy hero-copy--home" data-reveal>
+                <h1>Manufacturer-backed mineral<br />supply for global buyers.</h1>
+                <p class="hero-text">
+                  Industrial minerals exported from India with clear specs, direct communication, and visible dispatch.
                 </p>
-              </div>
-
-              <div class="flex flex-col gap-8">
-                <div id="stage-tags" class="flex flex-wrap gap-2.5">
-                  <span class="rounded-full border border-black/10 bg-white/60 px-4 py-2 text-sm font-medium text-black/70 backdrop-blur-md">Glass grade</span>
-                  <span class="rounded-full border border-black/10 bg-white/60 px-4 py-2 text-sm font-medium text-black/70 backdrop-blur-md">Custom sizing</span>
-                  <span class="rounded-full border border-black/10 bg-white/60 px-4 py-2 text-sm font-medium text-black/70 backdrop-blur-md">Ceramics</span>
-                  <span class="rounded-full border border-black/10 bg-white/60 px-4 py-2 text-sm font-medium text-black/70 backdrop-blur-md">Foundry use</span>
+                <div class="hero-actions">
+                  <a class="button button--light" href="products/">Explore Portfolio</a>
+                  <a class="button button--ghost" href="./#contact" data-set-request="Quote">Request Quote</a>
+                  <a class="button button--ghost" href="./#contact" data-set-request="Sample">Request Sample</a>
                 </div>
-
-                <div class="grid gap-3 sm:grid-cols-3">
-                  <div class="rounded-[1.5rem] bg-white/55 px-4 py-4 backdrop-blur-md ring-1 ring-black/5">
-                    <p class="section-kicker text-black/35">Positioning</p>
-                    <p id="stage-note-a" class="mt-2 text-base font-semibold text-black">Consistency over commodity pricing.</p>
+                <p class="hero-subline">Fast Response. Reliable Supply. No Surprises.</p>
+              </div>
+              <div class="home-poster" data-reveal data-parallax="0.14">
+                <div class="home-poster__surface">
+                  <span class="ore-slab ore-slab--a"></span>
+                  <span class="ore-slab ore-slab--b"></span>
+                  <span class="ore-slab ore-slab--c"></span>
+                  <div class="home-poster__summary">
+                    <p class="home-poster__eyebrow">At a glance</p>
+                    <strong>Right material. Right detail. Ready to move.</strong>
+                    <p>Specification-led supply with packing and shipment aligned before the cargo moves.</p>
                   </div>
-                  <div class="rounded-[1.5rem] bg-white/55 px-4 py-4 backdrop-blur-md ring-1 ring-black/5">
-                    <p class="section-kicker text-black/35">Use Case</p>
-                    <p id="stage-note-b" class="mt-2 text-base font-semibold text-black">Prepared for industrial production lines.</p>
+                  <div class="home-poster__metrics">
+                    <article class="home-metric">
+                      <span>Specification Focus</span>
+                      <strong>Chemistry, sizing, and packing</strong>
+                    </article>
+                    <article class="home-metric">
+                      <span>Packing</span>
+                      <strong>50 Kg/Jumbo Bags</strong>
+                    </article>
+                    <article class="home-metric">
+                      <span>Shipment</span>
+                      <strong>FCL</strong>
+                    </article>
                   </div>
-                  <div class="rounded-[1.5rem] bg-white/55 px-4 py-4 backdrop-blur-md ring-1 ring-black/5">
-                    <p class="section-kicker text-black/35">Commercial</p>
-                    <p id="stage-note-c" class="mt-2 text-base font-semibold text-black">Quoted with export-ready clarity.</p>
-                  </div>
+                  <span class="route-line route-line--visual"></span>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="execution" class="bg-[#060606] px-0 py-24 text-white md:py-32">
-        <div class="section-shell">
-          <div class="reveal flex flex-col items-center text-center">
-            <p class="section-kicker text-white/38">Execution</p>
-            <h2 class="mt-4 max-w-[10ch] text-[clamp(3rem,7vw,6.25rem)] font-extrabold leading-[0.9] tracking-[-0.06em]">
-              Built around what actually breaks shipments.
-            </h2>
-          </div>
-
-          <div class="mt-14">
-            <div class="ops-row reveal">
-              <div>
-                <p class="section-kicker text-white/35">01</p>
-                <h3 class="mt-3 text-[clamp(2rem,4vw,3.6rem)] font-extrabold leading-[0.95] tracking-[-0.05em]">Source</h3>
-              </div>
-              <p class="max-w-[42rem] text-[1.04rem] leading-8 text-white/62">
-                The company story leans on proximity to mines, processing units,
-                warehousing, and dispatch infrastructure instead of generic trading language.
-              </p>
+            <div class="shell proof-strip" data-reveal>
+              <article class="proof-strip__item">
+  <span class="proof-strip__eyebrow">Port Access</span>
+  <strong>Near Mundra Port</strong>
+</article><article class="proof-strip__item">
+  <span class="proof-strip__eyebrow">Commercial Terms</span>
+  <strong>FOB / CIF / CNF</strong>
+</article><article class="proof-strip__item">
+  <span class="proof-strip__eyebrow">Load Mode</span>
+  <strong>FCL</strong>
+</article><article class="proof-strip__item">
+  <span class="proof-strip__eyebrow">Sampling</span>
+  <strong>Sample-first flow</strong>
+</article>
             </div>
+          </section>
 
-            <div class="ops-row reveal">
-              <div>
-                <p class="section-kicker text-white/35">02</p>
-                <h3 class="mt-3 text-[clamp(2rem,4vw,3.6rem)] font-extrabold leading-[0.95] tracking-[-0.05em]">Process</h3>
-              </div>
-              <p class="max-w-[42rem] text-[1.04rem] leading-8 text-white/62">
-                Material is positioned around application fit, custom grades,
-                and spec-aware handling across silica, clay, and cementitious products.
-              </p>
-            </div>
-
-            <div class="ops-row reveal">
-              <div>
-                <p class="section-kicker text-white/35">03</p>
-                <h3 class="mt-3 text-[clamp(2rem,4vw,3.6rem)] font-extrabold leading-[0.95] tracking-[-0.05em]">Assure</h3>
-              </div>
-              <p class="max-w-[42rem] text-[1.04rem] leading-8 text-white/62">
-                Sampling, incoterms, order formats, payment structure, and lead-time expectations are all surfaced early.
-              </p>
-            </div>
-
-            <div class="ops-row reveal">
-              <div>
-                <p class="section-kicker text-white/35">04</p>
-                <h3 class="mt-3 text-[clamp(2rem,4vw,3.6rem)] font-extrabold leading-[0.95] tracking-[-0.05em]">Ship</h3>
-              </div>
-              <p class="max-w-[42rem] text-[1.04rem] leading-8 text-white/62">
-                The founder message focuses on vessel shifts, documents,
-                last-minute surprises, and staying responsive when timelines get tight.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="px-0 py-24 md:py-32">
-        <div class="section-shell">
-          <div class="reveal flex flex-col items-center text-center">
-            <p class="section-kicker">Commercial Snapshot</p>
-            <h2 class="mt-4 max-w-[10ch] text-[clamp(3rem,7vw,5.75rem)] font-extrabold leading-[0.92] tracking-[-0.06em]">
-              Fast to scan. Clear to buy.
-            </h2>
-          </div>
-
-          <div class="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <div class="metric-block reveal">
-              <p class="section-kicker">Lead Time</p>
-              <p class="mt-4 text-[clamp(2.4rem,5vw,3.8rem)] font-extrabold tracking-[-0.06em]">7-10</p>
-              <p class="mt-1 text-lg font-semibold text-black/75">days</p>
-            </div>
-            <div class="metric-block reveal">
-              <p class="section-kicker">Incoterms</p>
-              <p class="mt-4 text-[clamp(2.2rem,4vw,3.2rem)] font-extrabold tracking-[-0.06em]">FOB<br />CIF<br />CNF</p>
-            </div>
-            <div class="metric-block reveal">
-              <p class="section-kicker">Order Format</p>
-              <p class="mt-4 text-[clamp(2.2rem,4vw,3.2rem)] font-extrabold tracking-[-0.06em]">LCL<br />FCL</p>
-            </div>
-            <div class="metric-block reveal">
-              <p class="section-kicker">Commercial Flow</p>
-              <p class="mt-4 text-[clamp(2.2rem,4vw,3.2rem)] font-extrabold tracking-[-0.06em]">Sample<br />Quote<br />Ship</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" class="bg-black px-0 py-24 text-white md:py-32">
-        <div class="section-shell">
-          <div class="reveal flex flex-col items-center text-center">
-            <p class="section-kicker text-white/38">Contact</p>
-            <h2 class="mt-4 max-w-[10ch] text-[clamp(3rem,7vw,5.8rem)] font-extrabold leading-[0.92] tracking-[-0.06em]">
-              Start the conversation with what matters.
-            </h2>
-            <p class="mt-5 max-w-[42rem] text-[1.04rem] leading-7 text-white/62">
-              Material, use case, volume, and term. That is enough to start.
-            </p>
-          </div>
-
-          <div class="mt-14 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-            <div class="reveal">
-              <div class="space-y-5 text-lg text-white/70">
-                <p><span class="text-white/38">Email</span><br />info@jadewavesenterprise.com</p>
-                <p><span class="text-white/38">Direct</span><br />deep@jadewavesenterprise.com</p>
-                <p><span class="text-white/38">Phone</span><br />+91 99988 35503</p>
-                <p>
-                  <span class="text-white/38">Office</span><br />
-                  A-11 Florence, Science City Road,<br />
-                  Ahmedabad, Gujarat 380060
-                </p>
+          <section class="section-block" id="about">
+            <div class="shell section-shell">
+              <div class="home-ledger">
+                <div class="home-ledger__intro" data-reveal>
+                  <p class="section-kicker">Clarity, end to end.</p>
+                  <h2>The details are handled early.</h2>
+                    <p>
+                      The material, the spec, the packing, the documents, the shipment. The work is set up for import buyers across Southeast Asia, the Gulf, Mauritius, and Maldives to feel settled before cargo moves.
+                    </p>
+                </div>
+                <div class="home-ledger__rows">
+                  <article class="home-ledger-row" data-reveal>
+  <span>01</span>
+  <div>
+    <strong>Start with the spec</strong>
+    <p>Application, chemistry, sizing, moisture, and packing are aligned before pricing starts to drift.</p>
+  </div>
+</article><article class="home-ledger-row" data-reveal>
+  <span>02</span>
+  <div>
+    <strong>Align the commercials</strong>
+    <p>Shipment basis, sample flow, documents, and payment expectations are made clear early.</p>
+  </div>
+</article><article class="home-ledger-row" data-reveal>
+  <span>03</span>
+  <div>
+    <strong>Keep the flow visible</strong>
+    <p>Loading, documents, and shipment updates stay in view until the cargo moves.</p>
+  </div>
+</article><article class="home-ledger-row" data-reveal>
+  <span>04</span>
+  <div>
+    <strong>Built to be reordered</strong>
+    <p>The goal is simple: make the first order clear and the next one easier.</p>
+  </div>
+</article>
+                </div>
               </div>
             </div>
+          </section>
 
-            <form id="inquiry-form" class="reveal grid gap-5">
-              <label class="grid gap-2">
-                <span class="section-kicker text-white/38">Material</span>
-                <input class="input-line" type="text" name="material" value="Silica Sand" autocomplete="off" />
-              </label>
-              <label class="grid gap-2">
-                <span class="section-kicker text-white/38">Application</span>
-                <input class="input-line" type="text" name="application" value="Glass / Construction" autocomplete="off" />
-              </label>
-              <label class="grid gap-2">
-                <span class="section-kicker text-white/38">Volume</span>
-                <input class="input-line" type="text" name="volume" value="1 x 20ft container" autocomplete="off" />
-              </label>
-              <label class="grid gap-2">
-                <span class="section-kicker text-white/38">Incoterm</span>
-                <input class="input-line" type="text" name="incoterm" value="CIF" autocomplete="off" />
-              </label>
-              <label class="grid gap-2">
-                <span class="section-kicker text-white/38">Name</span>
-                <input class="input-line" type="text" name="name" value="" autocomplete="name" />
-              </label>
-              <label class="grid gap-2">
-                <span class="section-kicker text-white/38">Email</span>
-                <input class="input-line" type="email" name="email" value="" autocomplete="email" />
-              </label>
-              <div class="pt-2">
-                <button
-                  type="submit"
-                  class="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-semibold text-black transition hover:-translate-y-0.5"
-                >
-                  Prepare Inquiry Email
-                </button>
+          <section class="section-block section-block--contrast">
+            <div class="shell section-shell">
+              <div class="section-topline section-topline--stack" data-reveal>
+                <div class="section-topline__copy">
+                  <p class="section-kicker">Material families</p>
+                  <h2>Find the right family first.</h2>
+                </div>
+                <a class="section-link" href="products/">Explore portfolio</a>
               </div>
-              <p id="form-note" class="text-sm leading-7 text-white/55" aria-live="polite">
-                This opens your local mail client with a prepared inquiry draft.
-              </p>
-            </form>
-          </div>
-        </div>
-      </section>
-    </main>
+              <div class="home-family-list">
+                <article class="home-family-row" data-reveal>
+      <span class="home-family-row__index">01</span>
+      <div class="home-family-row__main">
+        <p class="home-family-row__count">3 products</p>
+        <h3><a class="home-family-row__family-link" href="products/#silica-quartz-feldspar">Silica, Quartz &amp; Feldspar</a></h3>
+        <p>Purity-led grades for glass, ceramics, filtration, and engineered stone.</p>
+        <div class="home-family-row__products">
+<a class="home-family-row__product" href="products/silica-sand/">
+  <span>Silica Sand</span>
+  <em aria-hidden="true">→</em>
+</a>
 
-    <footer class="relative z-10 bg-black pb-10">
-      <div class="section-shell flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-white/45 md:flex-row md:items-center md:justify-between">
-        <div class="flex items-center gap-3">
-          <img
-            src="assets/jade-waves-logo-transparent.png"
-            alt="Jade Waves Enterprise logo"
-            class="h-10 w-auto opacity-85"
-          />
-          <p>Jade Waves Enterprise</p>
-        </div>
-        <p>Industrial minerals and export-ready material supply.</p>
+<a class="home-family-row__product" href="products/quartz-sand-for-ceramics/">
+  <span>Quartz Sand</span>
+  <em aria-hidden="true">→</em>
+</a>
+
+<a class="home-family-row__product" href="products/feldspar/">
+  <span>Feldspar</span>
+  <em aria-hidden="true">→</em>
+</a>
+</div>
       </div>
-    </footer>
-  </body>
-</html>
+      <a class="home-family-row__cta" href="products/#silica-quartz-feldspar">View family</a>
+    </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-block section-block--contrast" id="industries">
+            <div class="shell section-shell">
+              <div class="home-split home-split--stack">
+                <article class="home-split__panel" data-reveal>
+                  <p class="section-label">Industries</p>
+                  <h2>Specified into the work that keeps moving.</h2>
+                  <p>The range is built around glass, ceramics, construction, and foundry demand.</p>
+                  <div class="industry-rail">
+                    <article class="industry-line" data-reveal>
+  <h3>Glass</h3>
+  <p>Purity-led silica, quartz, and feldspar for glass batches where low iron and steadier melt behavior carry through.</p>
+</article><article class="industry-line" data-reveal>
+  <h3>Ceramics</h3>
+  <p>Quartz sand, feldspar, and silica sand for ceramic bodies, tiles, and glaze-linked production.</p>
+</article><article class="industry-line" data-reveal>
+  <h3>Construction</h3>
+  <p>Silica sand and feldspar for construction systems and mineral-heavy site demand.</p>
+</article><article class="industry-line" data-reveal>
+  <h3>Foundry</h3>
+  <p>Silica sand for foundry systems that depend on repeatable sizing and cleaner supply control.</p>
+</article>
+                  </div>
+                </article>
+                <article class="home-split__panel" id="process" data-reveal>
+                  <p class="section-label">Process</p>
+                  <h2>From inquiry to dispatch.</h2>
+                  <p>Short steps. Clean documents. One visible export flow.</p>
+                  <div class="home-process-list">
+                    <article class="process-step" data-reveal>
+  <span>01</span>
+  <div class="process-step__body">
+    <h3>Inquiry</h3>
+    <p>Share the product, application, destination, and target volume.</p>
+  </div>
+</article><article class="process-step" data-reveal>
+  <span>02</span>
+  <div class="process-step__body">
+    <h3>Quote or sample</h3>
+    <p>Pricing or sampling is aligned to the right grade, packing, and end use.</p>
+  </div>
+</article><article class="process-step" data-reveal>
+  <span>03</span>
+  <div class="process-step__body">
+    <h3>Documentation</h3>
+    <p>Commercial terms, packing, and export documents are locked before loading.</p>
+  </div>
+</article><article class="process-step" data-reveal>
+  <span>04</span>
+  <div class="process-step__body">
+    <h3>Dispatch</h3>
+    <p>Shipment updates continue through loading, vessel planning, and cargo movement.</p>
+  </div>
+</article>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-block" id="countries-served">
+            <div class="shell section-shell">
+              <div class="corridor-stage">
+                <div class="corridor-stage__top" data-reveal>
+                  <div class="corridor-stage__intro">
+                    <p class="section-label">Countries Served</p>
+                    <h2>Countries we are currently exporting to from India.</h2>
+                    <p>These lanes group the countries where Jade Waves is already moving cargo and handling live export requirements from the same India origin point.</p>
+                  </div>
+                </div>
+                <div class="corridor-stage__body">
+                  <article class="corridor-stage__hub" data-reveal>
+                    <p class="corridor-stage__eyebrow">Origin</p>
+                    <div class="corridor-stage__hub-mark" aria-hidden="true">
+                      <span class="corridor-stage__hub-ring corridor-stage__hub-ring--outer"></span>
+                      <span class="corridor-stage__hub-ring corridor-stage__hub-ring--inner"></span>
+                      <span class="corridor-stage__hub-core"></span>
+                    </div>
+                    <h3>India manufacturing hub</h3>
+                    <p>Plant handling, packing, and dispatch flow outward from one origin before cargo splits into country groups.</p>
+                  </article>
+                  <div class="corridor-stage__lanes" data-corridor-stage>
+                    <button class="corridor-lane is-active" type="button" data-corridor-item aria-pressed="true">
+                      <span class="corridor-lane__rail" aria-hidden="true">
+                        <span class="corridor-lane__track"></span>
+                        <span class="corridor-lane__glow"></span>
+                        <span class="corridor-lane__ship"></span>
+                        <span class="corridor-lane__terminal"></span>
+                      </span>
+                      <span class="corridor-lane__card">
+                        <span class="corridor-lane__meta">01 · Gulf</span>
+                        <strong>Gulf</strong>
+                        <span class="corridor-lane__countries">UAE, Saudi Arabia, Oman, Kuwait, Qatar</span>
+                      </span>
+                    </button>
+                    <button class="corridor-lane" type="button" data-corridor-item aria-pressed="false">
+                      <span class="corridor-lane__rail" aria-hidden="true">
+                        <span class="corridor-lane__track"></span>
+                        <span class="corridor-lane__glow"></span>
+                        <span class="corridor-lane__ship"></span>
+                        <span class="corridor-lane__terminal"></span>
+                      </span>
+                      <span class="corridor-lane__card">
+                        <span class="corridor-lane__meta">02 · Southeast Asia</span>
+                        <strong>Southeast Asia</strong>
+                        <span class="corridor-lane__countries">Vietnam, Philippines, Indonesia, Malaysia</span>
+                      </span>
+                    </button>
+                    <button class="corridor-lane" type="button" data-corridor-item aria-pressed="false">
+                      <span class="corridor-lane__rail" aria-hidden="true">
+                        <span class="corridor-lane__track"></span>
+                        <span class="corridor-lane__glow"></span>
+                        <span class="corridor-lane__ship"></span>
+                        <span class="corridor-lane__terminal"></span>
+                      </span>
+                      <span class="corridor-lane__card">
+                        <span class="corridor-lane__meta">03 · Island Cargo</span>
+                        <strong>Island cargo</strong>
+                        <span class="corridor-lane__countries">Maldives and Mauritius</span>
+                      </span>
+                    </button>
+                    <button class="corridor-lane" type="button" data-corridor-item aria-pressed="false">
+                      <span class="corridor-lane__rail" aria-hidden="true">
+                        <span class="corridor-lane__track"></span>
+                        <span class="corridor-lane__glow"></span>
+                        <span class="corridor-lane__ship"></span>
+                        <span class="corridor-lane__terminal"></span>
+                      </span>
+                      <span class="corridor-lane__card">
+                        <span class="corridor-lane__meta">04 · East Africa</span>
+                        <strong>East Africa</strong>
+                        <span class="corridor-lane__countries">Kenya</span>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-block section-block--contrast">
+            <div class="shell section-shell">
+              <article class="relationship-band" data-reveal>
+                <p class="section-label">Supply Relationships</p>
+                <h2>Built for Long-Term Supply Relationships</h2>
+                <p>We work with buyers who value consistency in quality, communication, and shipment execution across repeat orders.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section-block section-block--contact">
+            <div class="shell section-shell">
+              <div class="contact-shell" id="contact">
+  <div class="contact-copy" data-reveal>
+    <p class="section-label">Contact</p>
+    <h2>Start the inquiry.</h2>
+    <p>
+      Share the product, end use, destination, and expected volume. We’ll align fit, packing, and shipment terms from there.
+    </p>
+    <div class="contact-details">
+      <a href="mailto:deep@jadewavesenterprise.com">deep@jadewavesenterprise.com</a>
+      <a href="tel:+91-999-883-5503">+91-999-883-5503</a>
+    </div>
+    </div>
+  <form class="inquiry-form" data-inquiry-form data-reveal data-recaptcha-configured="true">
+    <input type="hidden" name="company_website" value="" autocomplete="off" tabindex="-1" />
+    <div class="form-grid">
+      <label>
+        <span>Request Type</span>
+        <select name="request_type">
+          <option>Quote</option>
+          <option>Sample</option>
+          <option>TDS</option>
+          <option>General Inquiry</option>
+        </select>
+      </label>
+      <label>
+        <span>Product</span>
+        <select name="product"><option value="">Select product</option><option value="Silica Sand">Silica Sand</option><option value="Quartz Sand">Quartz Sand</option><option value="Feldspar">Feldspar</option></select>
+      </label>
+      <label>
+        <span>Name</span>
+        <input type="text" name="name" placeholder="Your name" required />
+      </label>
+      <label>
+        <span>Company</span>
+        <input type="text" name="company" placeholder="Company name" />
+      </label>
+      <label>
+        <span>Email</span>
+        <input type="email" name="email" placeholder="you@company.com" required />
+      </label>
+      <label>
+        <span>Phone</span>
+        <input type="text" name="phone" placeholder="+91 / country code" />
+      </label>
+      <label>
+        <span>Application</span>
+        <input type="text" name="application" placeholder="End use or industry" />
+      </label>
+      <label>
+        <span>Volume</span>
+        <input type="text" name="volume" placeholder="Trial / monthly volume" />
+      </label>
+      <label>
+        <span>Destination</span>
+        <input type="text" name="destination" placeholder="Country / discharge port" />
+      </label>
+      <label>
+        <span>Packing Size</span>
+        <input type="text" name="packing_size" placeholder="50 Kg bags / Jumbo bags / bulk" />
+      </label>
+      <label class="form-grid__wide">
+        <span>Requirement</span>
+        <textarea name="notes" rows="4" placeholder="Share grade, packing, destination, or any spec points that matter."></textarea>
+      </label>
+    </div>
+    <div class="form-security">
+        <div class="g-recaptcha" data-sitekey="6Lf79G8tAAAAANbgXZMp8-l_abmdtPtagvt3TTsm"></div>
+        <p class="form-security__hint">Protected by Google reCAPTCHA.</p>
+      </div>
+    <div class="form-actions">
+      <button class="button button--dark" type="submit">Send Inquiry</button>
+      <p class="form-note" data-form-note>Send the form directly. We'll review the requirement and respond by email.</p>
+    </div>
+  </form>
+</div>
+            </div>
+          </section>
+        </main>
+        <footer class="site-footer">
+  <div class="shell site-footer__inner">
+    <div>
+      <p class="footer-label">Jade Waves Enterprise</p>
+      <p class="footer-copy">Industrial minerals, supplied with more control.</p>
+    </div>
+    <div class="footer-grid">
+      <div>
+        <p class="footer-heading">Contact</p>
+        <a href="tel:+91-999-883-5503">+91-999-883-5503</a>
+        <a href="mailto:deep@jadewavesenterprise.com">deep@jadewavesenterprise.com</a>
+      </div>
+      <div>
+        <p class="footer-heading">Navigate</p>
+        <a href="./">Home</a>
+        <a href="products/">Products</a>
+        <a href="operations/">Operations</a>
+        <a href="blog/">Blog</a>
+        <a href="hear-from-ceo/">Hear from Our CEO</a>
+        <a href="export-markets/">Export Markets</a>
+        <a href="./#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+  <div class="shell site-footer__meta">
+    <p>&copy; <span data-current-year>2026</span> Jade Waves Enterprise. All rights reserved.</p>
+  </div>
+</footer>
+              </body>
+            </html>
